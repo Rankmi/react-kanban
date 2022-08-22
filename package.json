@@ -1,5 +1,5 @@
 {
-  "name": "@asseinfo/react-kanban",
+  "name": "@rankmi/react-kanban",
   "version": "2.1.0",
   "description": "Yet another Kanban/Trello board lib for React.",
   "main": "dist/index.js",
@@ -7,7 +7,13 @@
     "dist/index.js",
     "dist/styles.css"
   ],
-  "repository": "https://github.com/asseinfo/react-kanban",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rankmi/react-kanban.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/rankmi"
+  },
   "author": "Leandro Lourenci",
   "license": "MIT",
   "peerDependencies": {

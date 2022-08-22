@@ -3,6 +3,36 @@ import Board from '../src'
 import getUrlParams from './services/getUrlParams'
 import '../src/styles.scss'
 
+const aux2 = (cards) => {
+  const result = []
+  for (let index = 1; index <= cards; index++) {
+    result.push({
+      id: index,
+      title: 'Card title 1',
+      description: 'Card content',
+      column: Math.floor(Math.random() * (4 - 1) + 1),
+    })
+  }
+
+  return [
+    {
+      id: 1,
+      title: 'Column 1',
+      cards: result.filter(({ column }) => column === 1),
+    },
+    {
+      id: 2,
+      title: 'Column 2',
+      cards: result.filter(({ column }) => column === 2),
+    },
+    {
+      id: 3,
+      title: 'Column 3',
+      cards: result.filter(({ column }) => column === 3),
+    },
+  ]
+}
+
 const board = {
   columns: [
     {
@@ -71,7 +101,7 @@ render(
     onColumnRemove={console.log}
     onColumnRename={console.log}
     onCardRemove={console.log}
-    initialBoard={board}
+    initialBoard={{ columns: aux2(500) }}
   />,
   document.getElementById('app')
 )
