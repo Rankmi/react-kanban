@@ -8,7 +8,7 @@ const aux2 = (cards) => {
   for (let index = 1; index <= cards; index++) {
     result.push({
       id: index,
-      title: 'Card title 1',
+      title: `Card title ${index}`,
       description: 'Card content',
       column: Math.floor(Math.random() * (4 - 1) + 1),
     })
