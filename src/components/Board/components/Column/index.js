@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import Card from './components/Card'
 import withDroppable from '../../../withDroppable'
@@ -24,6 +24,12 @@ function Column({
 }) {
   const [itemsCount, setItemsCount] = useState(20)
   const [hasMore, setHasMore] = useState(true)
+
+  useEffect(() => {
+    setItemsCount(20)
+    setHasMore(true)
+  }, [children.cards])
+
   const loadMore = () => {
     if (itemsCount >= children.cards.length) {
       setHasMore(false)
@@ -63,7 +69,7 @@ function Column({
                   next={loadMore}
                   height={600}
                   hasMore={hasMore}
-                  loader={null}
+                  loader={<div />}
                   endMessage={null}
                 >
                   {children.cards.slice(0, itemsCount).map((card, index) => (
