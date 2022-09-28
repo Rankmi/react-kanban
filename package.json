@@ -1,6 +1,6 @@
 {
   "name": "@rankmi/react-kanban",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "Yet another Kanban/Trello board lib for React.",
   "main": "dist/index.js",
   "files": [
