@@ -7,7 +7,7 @@ import { pickPropOut } from '@services/utils'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 const ColumnEmptyPlaceholder = forwardRef((props, ref) => (
-  <div ref={ref} style={{ minHeight: 'inherit', height: 'inherit' }} {...props} />
+  <div ref={ref} style={{ minHeight: 'inherit', height: 'inherit', overflowX: 'unset' }} {...props} />
 ))
 
 const DroppableColumn = withDroppable(ColumnEmptyPlaceholder)
@@ -23,14 +23,9 @@ function Column({
   allowAddCard,
 }) {
   const [data, setData] = useState({ itemsCount: 0, hasMore: true })
-  const [show, setShow] = useState(true)
 
   useEffect(() => {
-    setShow(false)
     setData({ itemsCount: 20, hasMore: true })
-    setTimeout(() => {
-      setShow(true)
-    }, 100)
   }, [children.cards])
 
   const loadMore = () => {
@@ -42,6 +37,7 @@ function Column({
       setData({ hasMore: true, itemsCount: data.itemsCount + 20 })
     }, 50)
   }
+
   return (
     <Draggable draggableId={`column-draggable-${children.id}`} index={columnIndex} isDragDisabled={disableColumnDrag}>
       {(columnProvided) => {
@@ -65,13 +61,17 @@ function Column({
             <div {...columnProvided.dragHandleProps}>{renderColumnHeader(children)}</div>
 
             {allowAddCard && <CardAdder column={children} onConfirm={onCardNew} />}
-            <DroppableColumn key={String(children.id)} droppableId={String(children.id)}>
-              {show && children.cards.length ? (
+            <DroppableColumn
+              style={{ height: 'auto !important' }}
+              key={String(children.id)}
+              droppableId={String(children.id)}
+            >
+              {children.cards.length ? (
                 <InfiniteScroll
                   dataLength={data.itemsCount}
                   scrollableTarget='scrollableDiv'
                   next={loadMore}
-                  height={600}
+                  height='auto !important'
                   hasMore={data.hasMore}
                   loader={<div />}
                   endMessage={null}
