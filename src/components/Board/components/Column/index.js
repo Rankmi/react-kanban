@@ -22,25 +22,22 @@ function Column({
   onCardNew,
   allowAddCard,
 }) {
-  const [data, setData] = useState({ itemsCount: 0, hasMore: true })
-  const [show, setShow] = useState(true)
+  const [itemsCount, setItemsCount] = useState(20)
+  const [hasMore, setHasMore] = useState(true)
 
   useEffect(() => {
-    setShow(false)
-    setData({ itemsCount: 20, hasMore: true })
-    setTimeout(() => {
-      setShow(true)
-    }, 100)
+    setItemsCount(20)
+    setHasMore(true)
   }, [children.cards])
 
   const loadMore = () => {
-    if (data.itemsCount >= children.cards.length) {
-      setData({ ...data, hasMore: false })
+    if (itemsCount >= children.cards.length) {
+      setHasMore(false)
       return
     }
     setTimeout(() => {
-      setData({ hasMore: true, itemsCount: data.itemsCount + 20 })
-    }, 50)
+      setItemsCount(itemsCount + 20)
+    }, 100)
   }
   return (
     <Draggable draggableId={`column-draggable-${children.id}`} index={columnIndex} isDragDisabled={disableColumnDrag}>
@@ -63,20 +60,19 @@ function Column({
             data-testid={`column-${children.id}`}
           >
             <div {...columnProvided.dragHandleProps}>{renderColumnHeader(children)}</div>
-
             {allowAddCard && <CardAdder column={children} onConfirm={onCardNew} />}
             <DroppableColumn key={String(children.id)} droppableId={String(children.id)}>
-              {show && children.cards.length ? (
+              {children.cards.length ? (
                 <InfiniteScroll
-                  dataLength={data.itemsCount}
+                  dataLength={itemsCount}
                   scrollableTarget='scrollableDiv'
                   next={loadMore}
                   height={600}
-                  hasMore={data.hasMore}
+                  hasMore={hasMore}
                   loader={<div />}
                   endMessage={null}
                 >
-                  {children.cards.slice(0, data.itemsCount).map((card, index) => (
+                  {children.cards.slice(0, itemsCount).map((card, index) => (
                     <Card
                       key={card.id}
                       index={index}
